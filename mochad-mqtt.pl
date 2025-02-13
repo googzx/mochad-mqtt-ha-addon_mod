@@ -712,6 +712,14 @@ sub process_x10_cmd {
         }
         store_state();
     }
+   elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/normal/ ) {
+        AE::log debug => "Front door closed";
+        process_x10_cmd( "OFF", "P1" );
+    }
+   elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/alert/ ) {
+        AE::log debug => "Front door closed";
+        process_x10_cmd( "ON", "P1" );
+    }
     else {
         AE::log error => "unexpected $device: $cmd";
 
