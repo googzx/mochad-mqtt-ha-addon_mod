@@ -624,12 +624,60 @@ sub process_x10_line {
         }
     }
    elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/normal/ ) {
-        AE::log debug => "Front door closed";
+        AE::log debug => "P1 closed";
         process_x10_cmd( "OFF", "P1" );
     }
    elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/alert/ ) {
-        AE::log debug => "Front door closed";
+        AE::log debug => "P1 open";
         process_x10_cmd( "ON", "P1" );
+    }
+   elsif ( $input =~ m/67/ && $input =~ m/9A/ && $input =~ m/normal/ ) {
+        AE::log debug => "P2 closed";
+        process_x10_cmd( "OFF", "P2" );
+    }
+   elsif ( $input =~ m/67/ && $input =~ m/9A/ && $input =~ m/alert/ ) {
+        AE::log debug => "P2 open";
+        process_x10_cmd( "ON", "P2" );
+    }
+   elsif ( $input =~ m/C3/ && $input =~ m/1C/ && $input =~ m/normal/ ) {
+        AE::log debug => "P3 closed";
+        process_x10_cmd( "OFF", "P3" );
+    }
+   elsif ( $input =~ m/C3/ && $input =~ m/1C/ && $input =~ m/alert/ ) {
+        AE::log debug => "P3 open";
+        process_x10_cmd( "ON", "P3" );
+    }
+   elsif ( $input =~ m/27/ && $input =~ m/F9/ && $input =~ m/normal/ ) {
+        AE::log debug => "P4 closed";
+        process_x10_cmd( "OFF", "P4" );
+    }
+   elsif ( $input =~ m/27/ && $input =~ m/F9/ && $input =~ m/alert/ ) {
+        AE::log debug => "P4 open";
+        process_x10_cmd( "ON", "P4" );
+    }
+   elsif ( $input =~ m/2F/ && $input =~ m/9B/ && $input =~ m/normal/ ) {
+        AE::log debug => "P5 closed";
+        process_x10_cmd( "OFF", "P5" );
+    }
+   elsif ( $input =~ m/2F/ && $input =~ m/9B/ && $input =~ m/alert/ ) {
+        AE::log debug => "P5 open";
+        process_x10_cmd( "ON", "P5" );
+    }
+   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/normal/ ) {
+        AE::log debug => "P6 closed";
+        process_x10_cmd( "OFF", "P6" );
+    }
+   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/alert/ ) {
+        AE::log debug => "P6 open";
+        process_x10_cmd( "ON", "P6" );
+    }
+   elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/normal/ ) {
+        AE::log debug => "P7 clear";
+        process_x10_cmd( "OFF", "P7" );
+    }
+   elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/alert/ ) {
+        AE::log debug => "P7 motion";
+        process_x10_cmd( "ON", "P7" );
     }
     else {
         AE::log error => "Unmatched: $input";
