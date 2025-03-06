@@ -631,11 +631,11 @@ sub process_x10_line {
         AE::log debug => "P1 open";
         process_x10_cmd( "ON", "P1" );
     }
-   elsif ( $input =~ m/67/ && $input =~ m/9A/ && $input =~ m/normal/ ) {
+   elsif ( $input =~ m/A9/ && $input =~ m/40/ && $input =~ m/normal/ ) {
         AE::log debug => "P2 closed";
         process_x10_cmd( "OFF", "P2" );
     }
-   elsif ( $input =~ m/67/ && $input =~ m/9A/ && $input =~ m/alert/ ) {
+   elsif ( $input =~ m/A9/ && $input =~ m/40/ && $input =~ m/alert/ ) {
         AE::log debug => "P2 open";
         process_x10_cmd( "ON", "P2" );
     }
