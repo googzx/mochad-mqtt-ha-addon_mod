@@ -623,11 +623,11 @@ sub process_x10_line {
             process_x10_cmd( "$1$2", $house );
         }
     }
-   elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/normal/ ) {
+   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
         AE::log debug => "P1 closed";
         process_x10_cmd( "OFF", "P1" );
     }
-   elsif ( $input =~ m/71/ && $input =~ m/1A/ && $input =~ m/alert/ ) {
+   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/alert/ ) {
         AE::log debug => "P1 open";
         process_x10_cmd( "ON", "P1" );
     }
@@ -643,11 +643,11 @@ sub process_x10_line {
         AE::log debug => "P3 closed";
         process_x10_cmd( "OFF", "P3" );
     }
-   elsif ( $input =~ m/C3/ && $input =~ m/1C/ && $input =~ m/alert/ ) {
+   elsif ( $input =~ m/69/ && $input =~ m/40/ && $input =~ m/alert/ ) {
         AE::log debug => "P3 open";
         process_x10_cmd( "ON", "P3" );
     }
-   elsif ( $input =~ m/27/ && $input =~ m/F9/ && $input =~ m/normal/ ) {
+   elsif ( $input =~ m/69/ && $input =~ m/40/ && $input =~ m/normal/ ) {
         AE::log debug => "P4 closed";
         process_x10_cmd( "OFF", "P4" );
     }
