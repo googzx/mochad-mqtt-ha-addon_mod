@@ -680,7 +680,7 @@ sub process_x10_line {
         process_x10_cmd( "ON", "P7" );
     }
     else {
-        AE::log warning => "Unmatched: $input";
+        AE::log error => "Unmatched: $input";
     }
 }
 
