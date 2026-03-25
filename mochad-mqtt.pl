@@ -598,6 +598,9 @@ sub process_x10_line {
         else {
             AE::log debug => "B1 motion";
 			process_x10_cmd( "ON", "B1" );
+			sleep(10);
+			AE::log debut => "B1 clear";
+			process_x10_cmd( "OFF", "B1" );
         }
     }
     elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
