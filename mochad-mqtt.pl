@@ -592,25 +592,41 @@ sub process_x10_line {
     send_mqtt_message( 'passthru', $input, 0 ) if ( $config{passthru} );
 
     if ($raw) { }
-    elsif ( $input =~ m{RF\sHouseUnit:\s+([A-Z])(\d+)\s+Func:\s+([\sa-z]+)}i ) {
-        my $house = uc $1;
-        my $unit  = $2;
-		$unit = '99'.$unit;
-        my $cmd   = lc $3;
-        process_x10_cmd( $cmd, "$house$unit" );
+   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
+        AE::log debug => "P1 closed";
+        process_x10_cmd( "OFF", "P1" );
     }
-   elsif ( $input =~ m{ HouseUnit:\s+([A-Z])(\d+)}i ) {
-        my $house = uc $1;
-        my $unit  = $2;
-        AE::log debug => "House=$house Unit=$unit";
-        $addr_queue->{$house} ||= {};
-        $addr_queue->{$house}{$unit} = 1;
+   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/alert/ ) {
+        AE::log debug => "P1 open";
+        process_x10_cmd( "ON", "P1" );
     }
-    elsif ( $input =~ m{ House:\s+([A-Z])\s+Func:\s+([\sa-z]+)}i ) {
-        my $cmd   = lc $2;
-        my $house = uc $1;
-
-        AE::log debug => "House=$house Cmd=$cmd";
+   elsif ( $input =~ m/C1/ && $input =~ m/00/ && $input =~ m/normal/ ) {
+        AE::log debug => "P2 closed";
+        process_x10_cmd( "OFF", "P2" );
+    }
+   elsif ( $input =~ m/C1/ && $input =~ m/00/ && $input =~ m/alert/ ) {
+        AE::log debug => "P2 open";
+        process_x10_cmd( "ON", "P2" );
+    }
+   elsif ( $input =~ m/BF/ && $input =~ m/22/ && $input =~ m/normal/ ) {
+        AE::log debug => "P3 closed";
+        process_x10_cmd( "OFF", "P3" );
+    }
+   elsif ( $input =~ m/BF/ && $input =~ m/22/ && $input =~ m/alert/ ) {
+        AE::log debug => "P3 open";
+        process_x10_cmd( "ON", "P3" );
+    }
+   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/normal/ ) {
+        AE::log debug => "P4 closed";
+        process_x10_cmd( "OFF", "P6" );
+    }
+   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/alert/ ) {
+        AE::log debug => "P4 open";
+        process_x10_cmd( "ON", "P6" );
+    }
+   elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/normal/ ) {
+        AE::log debug => "P7 clear";
+        process_x10_cmd( "OFF", "P7" );
         if ( $cmd =~ m{^on$|^off$} ) {
             if ( $addr_queue->{$house} ) {
                 for my $k ( keys %{ $addr_queue->{$house} } ) {
@@ -622,58 +638,6 @@ sub process_x10_line {
         elsif ( $cmd =~ m{all\s+(\w+)\s+(\w+)} ) {
             process_x10_cmd( "$1$2", $house );
         }
-    }
-   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
-        AE::log debug => "P1 closed";
-        process_x10_cmd( "OFF", "P1" );
-    }
-   elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/alert/ ) {
-        AE::log debug => "P1 open";
-        process_x10_cmd( "ON", "P1" );
-    }
-   elsif ( $input =~ m/A9/ && $input =~ m/40/ && $input =~ m/normal/ ) {
-        AE::log debug => "P2 closed";
-        process_x10_cmd( "OFF", "P2" );
-    }
-   elsif ( $input =~ m/A9/ && $input =~ m/40/ && $input =~ m/alert/ ) {
-        AE::log debug => "P2 open";
-        process_x10_cmd( "ON", "P2" );
-    }
-   elsif ( $input =~ m/C3/ && $input =~ m/1C/ && $input =~ m/normal/ ) {
-        AE::log debug => "P3 closed";
-        process_x10_cmd( "OFF", "P3" );
-    }
-   elsif ( $input =~ m/C3/ && $input =~ m/1C/ && $input =~ m/alert/ ) {
-        AE::log debug => "P3 open";
-        process_x10_cmd( "ON", "P3" );
-    }
-   elsif ( $input =~ m/69/ && $input =~ m/40/ && $input =~ m/normal/ ) {
-        AE::log debug => "P4 closed";
-        process_x10_cmd( "OFF", "P4" );
-    }
-   elsif ( $input =~ m/69/ && $input =~ m/40/ && $input =~ m/alert/ ) {
-        AE::log debug => "P4 open";
-        process_x10_cmd( "ON", "P4" );
-    }
-   elsif ( $input =~ m/2F/ && $input =~ m/9B/ && $input =~ m/normal/ ) {
-        AE::log debug => "P5 closed";
-        process_x10_cmd( "OFF", "P5" );
-    }
-   elsif ( $input =~ m/2F/ && $input =~ m/9B/ && $input =~ m/alert/ ) {
-        AE::log debug => "P5 open";
-        process_x10_cmd( "ON", "P5" );
-    }
-   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/normal/ ) {
-        AE::log debug => "P6 closed";
-        process_x10_cmd( "OFF", "P6" );
-    }
-   elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/alert/ ) {
-        AE::log debug => "P6 open";
-        process_x10_cmd( "ON", "P6" );
-    }
-   elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/normal/ ) {
-        AE::log debug => "P7 clear";
-        process_x10_cmd( "OFF", "P7" );
     }
    elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/alert/ ) {
         AE::log debug => "P7 motion";
