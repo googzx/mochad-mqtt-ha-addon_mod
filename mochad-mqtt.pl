@@ -599,7 +599,7 @@ sub process_x10_line {
             AE::log debug => "B1 motion";
 			process_x10_cmd( "ON", "B1" );
 			sleep 10;
-			AE::log debut => "B1 clear";
+			AE::log debug => "B1 clear";
 			process_x10_cmd( "OFF", "B1" );
         }
     }
