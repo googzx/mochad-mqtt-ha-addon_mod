@@ -592,9 +592,13 @@ sub process_x10_line {
     send_mqtt_message( 'passthru', $input, 0 ) if ( $config{passthru} );
 
     if ($raw) { }
-    elsif ( $input =~ m/Rx/ && $input =~ m/B1/ && $input =~ m/on/ ) {
-        AE::log debug => "B1 motion";
-        process_x10_cmd( "ON", "B1" );
+    elsif ( $input =~ m/B1/ && $input =~ m/On/ ) {
+        if ( $input =~ m/RFSEC/ ) {
+        }
+        else {
+            AE::log debug => "B1 motion";
+			process_x10_cmd( "ON", "B1" );
+        }
     }
     elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
         AE::log debug => "P1 closed";
