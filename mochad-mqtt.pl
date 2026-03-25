@@ -618,26 +618,23 @@ sub process_x10_line {
     }
     elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/normal/ ) {
         AE::log debug => "P4 closed";
-        process_x10_cmd( "OFF", "P6" );
+        process_x10_cmd( "OFF", "P4" );
     }
     elsif ( $input =~ m/A5/ && $input =~ m/8D/ && $input =~ m/alert/ ) {
         AE::log debug => "P4 open";
-        process_x10_cmd( "ON", "P6" );
+        process_x10_cmd( "ON", "P4" );
+        if ( $input =~ m/bat/ ) {
+            AE::log debug => "O4 open";
+			process_x10_cmd( "ON", "O4" );
+        }
+        else {
+            AE::log debug => "O4 closed";
+			process_x10_cmd( "OFF", "O4" );
+        }
     }
     elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/normal/ ) {
         AE::log debug => "P7 clear";
         process_x10_cmd( "OFF", "P7" );
-        if ( $cmd =~ m{^on$|^off$} ) {
-            if ( $addr_queue->{$house} ) {
-                for my $k ( keys %{ $addr_queue->{$house} } ) {
-                    process_x10_cmd( $cmd, "$house$k" );
-                }
-                delete $addr_queue->{$house};
-            }
-        }
-        elsif ( $cmd =~ m{all\s+(\w+)\s+(\w+)} ) {
-            process_x10_cmd( "$1$2", $house );
-        }
     }
     elsif ( $input =~ m/01/ && $input =~ m/Motion/ && $input =~ m/alert/ ) {
         AE::log debug => "P7 motion";
