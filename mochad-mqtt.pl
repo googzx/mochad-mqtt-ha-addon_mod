@@ -592,22 +592,6 @@ sub process_x10_line {
     send_mqtt_message( 'passthru', $input, 0 ) if ( $config{passthru} );
 
     if ($raw) { }
-    elsif ( $input =~ m/A8/ && $input =~ m/On/ ) {
-        if ( $input =~ m/RFSEC/ ) {
-        }
-        else {
-            AE::log debug => "A8 on";
-			process_x10_cmd( "ON", "A8" );
-        }
-    }
-    elsif ( $input =~ m/A8/ && $input =~ m/Off/ ) {
-        if ( $input =~ m/RFSEC/ ) {
-        }
-        else {
-            AE::log debug => "A8 off";
-			process_x10_cmd( "OFF", "A8" );
-        }
-    }
     elsif ( $input =~ m/B1/ && $input =~ m/On/ ) {
         if ( $input =~ m/RFSEC/ ) {
         }
