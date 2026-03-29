@@ -598,9 +598,20 @@ sub process_x10_line {
         else {
             AE::log debug => "B1 motion";
 			process_x10_cmd( "ON", "B1" );
-			sleep 10;
+			sleep 5;
 			AE::log debug => "B1 clear";
 			process_x10_cmd( "OFF", "B1" );
+        }
+    }
+    elsif ( $input =~ m/B2/ && $input =~ m/On/ ) {
+        if ( $input =~ m/RFSEC/ ) {
+        }
+        else {
+            AE::log debug => "B2 motion";
+			process_x10_cmd( "ON", "B2" );
+			sleep 5;
+			AE::log debug => "B2 clear";
+			process_x10_cmd( "OFF", "B2" );
         }
     }
     elsif ( $input =~ m/15/ && $input =~ m/E8/ && $input =~ m/normal/ ) {
