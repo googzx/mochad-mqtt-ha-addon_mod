@@ -20,6 +20,9 @@ options:
     - name: ActiveEye motion 1
       code: B1
       type: sensor
+    - name: ActiveEye motion 2
+      code: B2
+      type: sensor
     - name: Front door
       code: P1
       type: sensor
