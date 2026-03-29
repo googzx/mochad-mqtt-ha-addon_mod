@@ -17,26 +17,35 @@ arch:
   - i386
 options:
   devices:
-    - name: front door
+    - name: ActiveEye motion 1
+      code: B1
+      type: sensor
+    - name: Front door
       code: P1
       type: sensor
-    - name: garage door
+    - name: Garage door
       code: P2
       type: sensor
-    - name: kitchen door
+    - name: Kitchen door
       code: P3
       type: sensor
-    - name: lr door
+    - name: Back door
       code: P4
-      type: sensor
-    - name: bedroom door
-      code: P5
-      type: sensor
-    - name: patio door
-      code: P6
       type: sensor
     - name: lr motion
       code: P7
+      type: sensor
+    - name: Front door replace battery
+      code: O1
+      type: sensor
+    - name: Garage door replace battery
+      code: O2
+      type: sensor
+    - name: Kitchen door replace battery
+      code: O3
+      type: sensor
+    - name: Back door replace battery
+      code: O4
       type: sensor
   mqtt:
     - host: "xxxxxxxx"
